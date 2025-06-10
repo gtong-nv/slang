@@ -1,6 +1,7 @@
 name: VK-GL-CTS Nightly
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "00 07 * * *"
 concurrency:
@@ -12,6 +13,8 @@ env:
   ACTIONS_STEP_DEBUG: true
 jobs:
   build:
+    # Only run scheduled jobs on the original repository, not forks
+    if: github.repository == 'shader-slang/slang' || github.event_name == 'workflow_dispatch'
     strategy:
       matrix:
         include:
